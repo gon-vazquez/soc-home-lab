@@ -7,10 +7,10 @@ A virtualized Security Operations Center lab built on my own PC to practice **SO
 ```
 Windows 11 host (16 GB RAM) — VirtualBox
 │
-├── splunk-server   Ubuntu Server 26.04 LTS  (3 GB RAM, 2 vCPU, 50 GB)
+├── splunk-server   Ubuntu Server 26.04 LTS  (2.5 GB RAM, 2 vCPU, 50 GB)
 │   └── Splunk Enterprise 10.4.3 — SIEM, receiving on port 9997
 │
-└── win10-victim    Windows 10 Enterprise LTSC  (in progress)
+└── win11-victim    Windows 11 Enterprise Eval  (4 GB RAM, 2 vCPU, 64 GB)
     └── Sysmon + Splunk Universal Forwarder → sends logs to Splunk
 
 Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
@@ -43,7 +43,15 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 ![Splunk home](screenshots/day-01/05-splunk-home.png)
 
 ### Day 2: Windows victim VM
-*In progress.*
+- **Issue:** Microsoft no longer offers the Windows 10 Enterprise evaluation ISO after Windows 10's end of support. Switched to Windows 11 Enterprise Evaluation (25H2), which better reflects current enterprise endpoints.
+- Built the VM with UEFI, Secure Boot, and TPM 2.0; rebalanced RAM across VMs (Splunk 2.5 GB, Windows 4 GB) to fit a 16 GB host.
+- Installed Guest Additions and verified lab connectivity to the Splunk receiver (`Test-NetConnection 192.168.56.101 -Port 9997` → success).
+- Took a `clean-install` snapshot to allow fast rollback after attack simulations.
+
+![Windows 11 VM](screenshots/day-02/01-win11-victim-vm.webp)
+![Windows 11 Installation](screenshots/day-02/02-win11-installing.jpeg)
+![Windows 11 Desktop](screenshots/day-02/03-win11-desktop.jpeg)
+![Windows 11 Powershell](screenshots/day-02/04-win11-powershell.jpeg)
 
 ## Incident Write-ups
 
