@@ -36,6 +36,9 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 - **Issue:** Splunk 10 refuses to run as root. Fixed it by running Splunk under a dedicated `splunk` service account and enabling systemd-managed boot-start, following least-privilege practice.
 - Configured a receiving port (9997) and created a `windows` index for endpoint logs.
 
+![Splunk VM](screenshots/day-01/01-virtualbox-splunk-vm.png)
+![Ubuntu storage config](screenshots/day-01/02-ubuntu-storage-lvm.webp)
+![Ubuntu Powershell](screenshots/day-01/03-ubuntu-login.png)
 ![Splunk running](screenshots/day-01/04-splunkd-running.png)
 ![Splunk home](screenshots/day-01/05-splunk-home.png)
 
