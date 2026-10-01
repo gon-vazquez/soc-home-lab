@@ -1,6 +1,7 @@
 # Incident Write-up #001: Scheduled Task Persistence
 
 **Date:** 2026-10-01
+
 **Analyst:** Gonzalo Sebastián Vázquez
 **Host:** win11-victim (192.168.56.103)
 **Severity:** Medium (would be High if unauthorized: one task runs as SYSTEM at boot)
