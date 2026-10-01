@@ -26,6 +26,7 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 | **Atomic Red Team** | Simulates real attacker techniques (MITRE ATT&CK) to detect |
 | **VirusTotal** | Threat intel lookups for hashes, IPs, and domains |
 | **Wireshark** | Packet-level network traffic analysis |
+| **Splunk Add-ons (Sysmon, Microsoft Windows)** | Parse Windows and Sysmon events into searchable fields |
 
 ## Progress Log
 
@@ -53,6 +54,19 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 ![Windows 11 Desktop](screenshots/day-02/03-win11-desktop.jpeg)
 ![Windows 11 Powershell](screenshots/day-02/04-win11-powershell.jpeg)
 
+### Day 3: Endpoint telemetry → SIEM
+- Installed **Sysmon** on the Windows 11 endpoint using the SwiftOnSecurity community configuration.
+- Installed the **Splunk Universal Forwarder** and configured `inputs.conf` to send Security, System, and Sysmon logs (XML format) to the `windows` index on 192.168.56.101:9997.
+- Installed the **Splunk Add-on for Sysmon** and **Splunk Add-on for Microsoft Windows** on the Splunk server for field extraction.
+- **Issue:** Security and System logs arrived, but Sysmon events did not. Diagnosed by comparing `source` values in Splunk: the forwarder runs as the virtual service account `NT SERVICE\SplunkForwarder`, which lacked read access to the Sysmon event channel. Fixed by adding it to the built-in **Event Log Readers** group.
+- Renamed the endpoint from its random default name to `win11-victim` for clearer investigations.
+- **First detection:** identified Notepad launches via Sysmon Event ID 1 (process creation), including full image path, parent process, and user.
+- Took a `sysmon-forwarder` snapshot after verifying the pipeline end to end.
+
+![Log sources](screenshots/day-03/08-log-sources.png)
+![First detection](screenshots/day-03/09-notepad-detection.png)
+![Raw Sysmon event](screenshots/day-03/10-sysmon-raw-event.png)
+
 ## Incident Write-ups
 
 Investigations of simulated attacks are documented in [`/writeups`](writeups/).
@@ -65,3 +79,6 @@ Investigations of simulated attacks are documented in [`/writeups`](writeups/).
 - Linux server administration (Ubuntu, systemd, service accounts)
 - SIEM deployment and configuration (Splunk)
 - Virtual networking and lab isolation
+- Endpoint telemetry with Sysmon and log forwarding to a SIEM
+- Troubleshooting missing log sources (Windows service account permissions)
+- SPL searches for process-creation detection (Sysmon Event ID 1)
