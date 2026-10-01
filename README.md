@@ -94,5 +94,9 @@ Investigations of simulated attacks are documented in [`/writeups`](writeups/).
 - SIEM deployment and configuration (Splunk)
 - Virtual networking and lab isolation
 - Endpoint telemetry with Sysmon and log forwarding to a SIEM
+- Adversary simulation with Atomic Red Team (MITRE ATT&CK)
+- Process-tree reconstruction and event correlation in Splunk
+- Incident documentation: timeline, evidence, verdict, and escalation reasoning
+- Identifying detection and visibility gaps
 - Troubleshooting missing log sources (Windows service account permissions)
 - SPL searches for process-creation detection (Sysmon Event ID 1)
