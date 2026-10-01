@@ -49,10 +49,10 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 - Installed Guest Additions and verified lab connectivity to the Splunk receiver (`Test-NetConnection 192.168.56.101 -Port 9997` → success).
 - Took a `clean-install` snapshot to allow fast rollback after attack simulations.
 
-![Windows 11 VM](screenshots/day-02/01-win11-victim-vm.webp)
-![Windows 11 Installation](screenshots/day-02/02-win11-installing.jpeg)
-![Windows 11 Desktop](screenshots/day-02/03-win11-desktop.jpeg)
-![Windows 11 Powershell](screenshots/day-02/04-win11-powershell.jpeg)
+![Windows 11 VM](screenshots/day-02/01-win11-victim-vm.png)
+![Windows 11 Installation](screenshots/day-02/02-win11-installing.png)
+![Windows 11 Desktop](screenshots/day-02/03-win11-desktop.png)
+![Windows 11 Powershell](screenshots/day-02/04-win11-powershell.png)
 
 ### Day 3: Endpoint telemetry → SIEM
 - Installed **Sysmon** on the Windows 11 endpoint using the SwiftOnSecurity community configuration.
