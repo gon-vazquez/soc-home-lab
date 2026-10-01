@@ -73,7 +73,7 @@ Investigations of simulated attacks are documented in [`/writeups`](writeups/).
 
 | # | Title | Technique | Verdict |
 |---|-------|-----------|---------|
-| — | *Coming soon* | | |
+| 001 | [Scheduled Task Persistence](writeups/001-scheduled-task-persistence.md) | T1053.005 | True Positive (authorized test) |
 
 ## Skills Practiced
 - Linux server administration (Ubuntu, systemd, service accounts)
