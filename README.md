@@ -67,6 +67,20 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 ![First detection](screenshots/day-03/09-notepad-detection.png)
 ![Raw Sysmon event](screenshots/day-03/10-sysmon-raw-event.png)
 
+### Day 4: First attack simulation and investigation
+- Enabled **PowerShell script block logging** and added the PowerShell Operational and Windows Defender Operational logs to the forwarder.
+- Installed **Atomic Red Team** on the endpoint (Defender exclusion scoped to its folder, lab VM only).
+- Reviewed test **T1053.005-1 (Scheduled Task persistence)** with `-ShowDetails` before execution, then ran it.
+- **Detected** the activity in Splunk with Sysmon Event ID 1 and reconstructed the full process chain: `powershell.exe → cmd.exe → schtasks.exe ×2`, creating one logon task and one startup task running as SYSTEM.
+- **Corroborated** with Sysmon Event ID 11: the Task Scheduler service (`svchost.exe`) wrote both task files to `C:\Windows\System32\Tasks\`. Events were linked by timing and task name.
+- **Lesson learned:** a follow-up search returned nothing because the "Last 15 minutes" window had moved past the incident. Searches should be anchored on the incident time, not on "now."
+- **Visibility gap found:** no Security Event ID 4698 (scheduled task created) because that audit policy is disabled by default.
+- Ran cleanup and **verified** removal with `schtasks /query`.
+- Documented the investigation in [write-up #001](writeups/001-scheduled-task-persistence.md).
+
+![Attack executed](screenshots/day-04/03-t1053-executed.png)
+![Detection in Splunk](screenshots/day-04/04-splunk-schtasks.png)
+
 ## Incident Write-ups
 
 Investigations of simulated attacks are documented in [`/writeups`](writeups/).
