@@ -78,8 +78,8 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 - Ran cleanup and **verified** removal with `schtasks /query`.
 - Documented the investigation in [write-up #001](writeups/001-scheduled-task-persistence.md).
 
-![Attack executed](screenshots/day-04/03-t1053-executed.png)
-![Detection in Splunk](screenshots/day-04/04-splunk-schtasks.png)
+![Attack executed](screenshots/day-04/03-t1053-executed.webp)
+![Detection in Splunk](screenshots/day-04/04-splunk-schtasks.webp)
 
 ## Incident Write-ups
 
