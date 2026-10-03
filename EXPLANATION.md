@@ -253,5 +253,3 @@ Alert → Triage → Investigate → Document → Close or Escalate
 - **Investigate:** dig into the logs for evidence.
 - **Document:** write it down (ticket / write-up).
 - **Close or escalate:** harmless → close. Real and serious → send to L2.
-
-So far you've practiced **Investigate** and **Document**. Next days add the rest.
