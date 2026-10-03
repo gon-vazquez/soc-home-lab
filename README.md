@@ -87,6 +87,8 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 - **Pivoted** from the Defender log (showed only SYSTEM) to **PowerShell script block logging (Event ID 4104)** to find the real user and exact command.
 - Documented it as a **GitHub Issue ticket** (#1) and **write-up #002**, then closed it with a verdict (True Positive, authorized).
 
+See ticket [#1](../../issues/1) and [write-up #002](writeups/002-defender-exclusion.md).
+
 ## Incident Write-ups
 
 Investigations of simulated attacks are documented in [`/writeups`](writeups/).
