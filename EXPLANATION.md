@@ -199,7 +199,7 @@ The next step is Triage, which basically means to quickly decide whether the log
 
 **Investigation**
 
-In cybersecurity, you should never assume something's safe or at risk without diving deeper into the logs. Zero trust means to never trust something by default. Furthermore, corroborating evidence is a good practice that any great L1 analyst should do to confirm whether an event is a real cyberattack or not. So Investigation turns into the immediate next step: digging into the logs. It revolves around three questions: who did it? when did it happen? what exactly happened (e.g. command, excluded path, etc)?
+In cybersecurity, you should never assume something's safe or at risk without diving deeper into the logs. Zero trust means to never trust something by default. Furthermore, corroborating evidence is a good practice any great L1 analyst should do to confirm whether an event is a real cyberattack or not. So Investigation turns into the immediate next step: digging into the logs. It revolves around three questions: who did it? when did it happen? what exactly happened (e.g. command, excluded path, etc)?
 
 1. **EXCLUDED:** C:\Temp\FakeMalware3
 2. **ACTOR:** S-1-5-21-73524690-744499101-3220969325-1001 (resolved to the local user `analyst`)
