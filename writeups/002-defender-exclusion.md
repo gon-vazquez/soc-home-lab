@@ -1,10 +1,15 @@
 # Incident Write-up #002: Defender Exclusion Added
 
 **Date:** 2026-10-02
+
 **Analyst:** Gonzalo Sebastián Vázquez
+
 **Host:** win11-victim (192.168.56.103)
+
 **Severity:** High
+
 **Status:** Closed – True Positive (authorized test)
+
 **Ticket:** #1
 
 ## Summary
