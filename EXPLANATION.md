@@ -185,13 +185,13 @@ We set up an alert with the following command:
     | search "Exclusions"
     | table _time Computer EventCode
 
-It triggers every 1 hour, but I manually ran it once in real-time mode. The severity of the alert is high because it represents a T1562.001 (Impair Defenses: Disable or Modify Tools) attack, according to the MITRE ATT&CK framework.
+It triggers every 1 hour, but I manually ran it once in real-time mode. The severity of the alert is high because it aligns with a T1562.001 (Impair Defenses: Disable or Modify Tools) attack, according to the MITRE ATT&CK framework.
 
 I read and understood the attack before creating an alert that automatically detects it without me having to dig into thousands of logs to find that specific attack. That's why the first step is to UNDERSTAND an attack, then set up an alert that actively searches for it, and then proceed with Triage.
 
 **Triage**
 
-The next step is Triage, which basically means to quickly decide whether the log is real or not and how urgent it is.
+The next step is Triage, which basically means to quickly decide whether the log represents a real threat or not and how urgent it is.
 
 1. **Detection:** Direct change to Defender's config (Event ID 5007). Severity: High, because it could mean an attacker just added a Defender exclusion to hide their malware in a specific folder.
 2. **Is it plausibly real?** Yes, this is suspicious and needs investigation to rule out legitimate activity (e.g. an IT admin could have excluded the folder for performance).
