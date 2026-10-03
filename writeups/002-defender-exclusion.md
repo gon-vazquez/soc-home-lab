@@ -1,6 +1,6 @@
 # Incident Write-up #002: Defender Exclusion Added
 
-**Date:** 2026-10-02
+**Time:** 2026-10-02 — 16:28:15 UTC
 
 **Analyst:** Gonzalo Sebastián Vázquez
 
