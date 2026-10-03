@@ -1,6 +1,6 @@
 # Incident Write-up: [Short title]
 
-**Time:** YYYY-MM-DD
+**Time:** YYYY-MM-DD HH:MM:SS UTC
 
 **Analyst:** Gonzalo Sebastián Vázquez
 
