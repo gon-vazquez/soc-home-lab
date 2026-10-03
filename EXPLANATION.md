@@ -154,7 +154,96 @@ In plain words: *"In the windows folder, show me every time Notepad was started.
 
 ---
 
-## The L1 loop (what you're training for)
+## Day 5 — The full loop (one real case, start to finish)
+
+**What we did:** took one suspicious event all the way through the job an L1 analyst actually does.
+
+**The loop (memorize this):**
+
+    Alert → Triage → Investigate → Document → Close or Escalate
+
+**Key terms**
+- **Alert:** a saved search that runs automatically and flags something suspicious, so you don't hunt by hand.
+- **Scheduled vs real-time alert:** scheduled runs every X minutes; real-time fires the moment a matching event arrives. Real-time is instant but heavier on the server.
+- **Triage:** the fast first look. Real or noise? How urgent? You size it up, you don't deep-dive yet.
+- **Investigate:** the deep dive. Answer who, what, when, how, using the logs as proof.
+- **SID (Security Identifier):** Windows' internal ID for an account. `S-1-5-18` = SYSTEM (not a person). `S-1-5-21-...-1001` = a real local user.
+- **Pivoting:** jumping from one log to another to answer a new question. The Defender log said *what* changed; the PowerShell log said *who* ran it.
+- **Ticket:** the short record of an incident (we used a GitHub Issue). **Write-up:** the full report it links to.
+- **True Positive / False Positive:** real threat vs. harmless activity that tripped the alert.
+- **Escalate:** hand a real, serious incident to L2.
+
+---
+
+### My first finished L1 loop (worked example)
+
+**Alert**
+
+We set up an alert with the following command:
+
+    index=windows host=win11-victim source="*Defender*" EventCode=5007
+    | search "Exclusions"
+    | table _time Computer EventCode
+
+It triggers every 1 hour, but I manually ran it once in real-time mode. The severity of the alert is high because it represents a T1562.001 (Impair Defenses: Disable or Modify Tools) attack, according to the MITRE ATT&CK framework.
+
+I read and understood the attack before creating an alert that automatically detects it without me having to dig into thousands of logs to find that specific attack. That's why the first step is to UNDERSTAND an attack, then set up an alert that actively searches for it, and then proceed with Triage.
+
+**Triage**
+
+The next step is Triage, which basically means to quickly decide whether the log is real or not and how urgent it is.
+
+1. Detection: Direct change to Defender's config (Event ID 5007). Severity: High, because it could mean an attacker just added a Defender exclusion to hide their malware in a specific folder.
+2. Is it plausibly real? Yes, this is suspicious and needs investigation to rule out legitimate activity (e.g. an IT admin could have excluded the folder for performance).
+3. Verdict: High severity and plausibly malicious, so investigate immediately, but the actual impact is still unknown.
+
+**Investigation**
+
+In cybersecurity, you should never assume something's safe or at risk without diving deeper into the logs. Zero trust means to never trust something by default. Furthermore, corroborating evidence is a good practice that any great L1 analyst should do to confirm whether an event is a real cyberattack or not. So Investigation turns into the immediate next step: digging into the logs. It revolves around three questions: who did it? when did it happen? what exactly happened (e.g. command, excluded path, etc)?
+
+1. EXCLUDED: C:\Temp\FakeMalware3
+2. ACTOR: S-1-5-21-73524690-744499101-3220969325-1001 (resolved to the local user `analyst`)
+3. COMMAND: Add-MpPreference -ExclusionPath "C:\Temp\FakeMalware3"
+4. TIMESTAMP: 2026-10-02T16:28:15 UTC
+
+Found via PowerShell script block logging (Event ID 4104), after the Defender 5007 event only showed SYSTEM. One log said *what* changed; another said *who* did it.
+
+**Documentation**
+
+Two records: a **ticket** and a **write-up**.
+- Ticket: GitHub Issue #1, `[HIGH] Defender exclusion added on win11-victim`, with labels `severity: high` and `status: investigating`. This mimics a real SOC ticketing system (like ServiceNow or Jira).
+- Write-up: `writeups/002-defender-exclusion.md`, the full report, linked from the ticket.
+
+**Close or Escalate**
+
+Verdict: **True Positive, but authorized** (I ran the command myself as a test), so the ticket is closed, no escalation. In a real SOC, an *unauthorized* exclusion would be escalated to L2 instead. Closed the ticket with a verdict comment and changed its label to `status: closed – true positive`.
+
+---
+
+**The lessons that matter**
+- *Understand the attack first, then build the alert.* You can't detect what you don't understand.
+- *Suspicious ≠ confirmed.* A Defender exclusion has legitimate uses. Triage says "investigate," not "we're breached."
+- *Stay objective.* Don't write the story ahead of the evidence.
+- *One log rarely tells the whole story.* Correlation is the skill.
+- *Noisy changes make noisy alerts.* Removing exclusions also fired the alert, real alerts should focus on the suspicious direction (additions), not cleanup.
+
+**Check yourself**
+1. What are the five stages of the L1 loop, in order?
+2. Why wasn't the Defender 5007 event enough to identify who did it?
+3. What's the difference between triage and investigation?
+4. Give one legitimate reason someone adds a Defender exclusion.
+
+<details><summary>Answers</summary>
+
+1. Alert → Triage → Investigate → Document → Close or Escalate.
+2. It showed the change applied as SYSTEM (S-1-5-18), which hides the real user. PowerShell logging (4104) revealed the actual account.
+3. Triage is the fast "is this real and how urgent?" check. Investigation is the deep dive for evidence (who/what/when/how).
+4. Performance, IT excludes large/trusted folders (databases, backups, build directories) so Defender doesn't slow them down.
+</details>
+
+---
+
+## The L1 loop (what I'm training for)
 
 ```
 Alert → Triage → Investigate → Document → Close or Escalate
