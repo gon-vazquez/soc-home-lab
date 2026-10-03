@@ -1,8 +1,11 @@
 # Incident Write-up: [Short title]
 
-**Date:** YYYY-MM-DD
-**Analyst:** Gonzalo Vázquez
+**Time:** YYYY-MM-DD
+
+**Analyst:** Gonzalo Sebastián Vázquez
+
 **Severity:** Low / Medium / High / Critical
+
 **Status:** Closed – True Positive / False Positive / Escalated to L2
 
 ## Summary
