@@ -81,6 +81,12 @@ Network: NAT (internet) + Host-only 192.168.56.0/24 (isolated lab traffic)
 ![Attack executed](screenshots/day-04/03-t1053-executed.webp)
 ![Detection in Splunk](screenshots/day-04/04-splunk-schtasks.webp)
 
+### Day 5: Full L1 loop (alert → triage → investigate → document → close)
+- Built a **real-time Splunk alert** on Defender exclusion changes (Event ID 5007), mapped to T1562.001.
+- Triggered it, then worked it as a real case: triaged (suspicious, High, impact unknown), then investigated.
+- **Pivoted** from the Defender log (showed only SYSTEM) to **PowerShell script block logging (Event ID 4104)** to find the real user and exact command.
+- Documented it as a **GitHub Issue ticket** (#1) and **write-up #002**, then closed it with a verdict (True Positive, authorized).
+
 ## Incident Write-ups
 
 Investigations of simulated attacks are documented in [`/writeups`](writeups/).
@@ -88,6 +94,7 @@ Investigations of simulated attacks are documented in [`/writeups`](writeups/).
 | # | Title | Technique | Verdict |
 |---|-------|-----------|---------|
 | 001 | [Scheduled Task Persistence](writeups/001-scheduled-task-persistence.md) | T1053.005 | True Positive (authorized test) |
+| 002 | [Defender Exclusion Added](writeups/002-defender-exclusion.md) | T1562.001 | True Positive (authorized test) |
 
 ## Skills Practiced
 - Linux server administration (Ubuntu, systemd, service accounts)
@@ -100,3 +107,6 @@ Investigations of simulated attacks are documented in [`/writeups`](writeups/).
 - Process-tree reconstruction and event correlation in Splunk
 - Incident documentation: timeline, evidence, verdict, and escalation reasoning
 - Identifying detection and visibility gaps
+- Alert engineering and real-time detection in Splunk
+- Full L1 workflow: triage, investigation, ticketing, and verdict/escalation
+- Log correlation and pivoting across data sources
